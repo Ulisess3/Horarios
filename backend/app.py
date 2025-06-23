@@ -6,9 +6,12 @@ app = Flask(__name__)
 CORS(app)
 
 def conectar_db():
-    return sqlite3.connect("usuarios.db")
+    conn = sqlite3.connect('usuarios.db')
+    conn.execute("PRAGMA foreign_keys = ON;")
+    return conn
 
 @app.route("/login", methods=["POST"])
+
 def login():
     data = request.get_json()
     usuario = data.get("usuario")
@@ -16,7 +19,7 @@ def login():
 
     conn = conectar_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM usuarios WHERE nombre = ? AND clave = ?", (usuario, clave))
+    cursor.execute("SELECT * FROM usuarios WHERE nombre = ? AND contraseña = ?", (usuario, clave))
     user = cursor.fetchone()
     conn.close()
 

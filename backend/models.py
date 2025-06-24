@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect('usuarios.db')
+conn = sqlite3.connect('database.db')
 cursor = conn.cursor()
 
 cursor.execute("PRAGMA foreign_keys = ON;")
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL,
     correo TEXT NOT NULL,
-    contraseña TEXT NOT NUL
+    contraseña TEXT NOT NULL,
     rol TEXT NOT NULL,
     estado TEXT NOT NULL
 )
@@ -50,9 +50,37 @@ CREATE TABLE IF NOT EXISTS historial_tareas (
 )
 ''')
 
+##ACTIVOS
+cursor.execute('''
+INSERT INTO usuarios (nombre, correo, contraseña, rol, estado)
+VALUES (?,?,?,?,?)
+''', ('cliente', 'cliente@mail.com', '123', 'cliente', 'activo'))
 
-cursor.execute("INSERT INTO usuarios (nombre, correo, contraseña, rol, estado) VALUES (?, ?, ?, ?, ?)",
-                ("nico", "nico@mail.com", "123", "cliente", "activo"))
+cursor.execute('''
+INSERT INTO usuarios (nombre, correo, contraseña, rol, estado)
+VALUES (?,?,?,?,?)
+''', ('admin', 'admin@mail.com', '123', 'administrador', 'activo'))
+
+cursor.execute('''
+INSERT INTO usuarios (nombre, correo, contraseña, rol, estado)
+VALUES (?,?,?,?,?)
+''', ('operario', 'operario@mail.com', '123', 'operario', 'activo'))
+
+##INACTIVOS
+cursor.execute('''
+INSERT INTO usuarios (nombre, correo, contraseña, rol, estado)
+VALUES (?,?,?,?,?)
+''', ('cliente_inactivo', 'cliente@mail.com', '123', 'cliente', 'inactivo'))
+
+cursor.execute('''
+INSERT INTO usuarios (nombre, correo, contraseña, rol, estado)
+VALUES (?,?,?,?,?)
+''', ('admin_inactivo', 'admin@mail.com', '123', 'administrador', 'inactivo'))
+
+cursor.execute('''
+INSERT INTO usuarios (nombre, correo, contraseña, rol, estado)
+VALUES (?,?,?,?,?)
+''', ('operario_inactivo', 'operario@mail.com', '123', 'operario', 'inactivo'))
 
 conn.commit()
 conn.close()

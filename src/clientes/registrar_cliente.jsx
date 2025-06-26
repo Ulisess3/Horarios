@@ -24,7 +24,7 @@ function RegistrarCliente() {
         setClave('');
         setCorreo('');
         setMensaje('Registro exitoso. Redirigiendo...')
-          setTimeout(() => {
+        setTimeout(() => {
             window.location.href = '/';
         }, 2000);
 
